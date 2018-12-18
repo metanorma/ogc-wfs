@@ -1,0 +1,88 @@
+= OGC Web Feature Service 3.0: Part 1 - Core
+:doctype: standard
+:encoding: utf-8
+:language: en
+:toc:
+:toc-placement!:
+:toclevels: 3
+:sectnums:
+:sectnumlevels: 4
+:sectanchors:
+:source-highlighter: pygments
+:figure-id: 0
+:table-id: 0
+:req-id: 0
+:rec-id: 0
+:per-id: 0
+:source-highlighter: pygments
+:pygments-style: borland
+:pygments-linenums-mode: table
+:revdate: 2018-04-07
+:status: candidate
+:committee: technical
+:draft: 3.0.0-draft.1
+:external-id: http://www.opengis.net/doc/IS/wfs-1/3.0
+:docnumber: 17-069
+:received-date: yyyy-mm-dd
+:issued-date: yyyy-mm-dd
+:published-date: yyyy-mm-dd
+:fullname: Clemens Portele
+:fullname_2: Panagiotis (Peter) A. Vretanos
+:docsubtype: Interface
+:keywords: ogcdoc, OGC document, web feature service, wfs, feature, property, geographic information, spatial data, spatial things, dataset, distribution, API, openapi, geojson, gml, html
+:submitting-organizations: CubeWerx Inc.; Hexagon; interactive instruments GmbH; Planet Labs 
+
+
+////
+Make sure to complete each included document
+////
+include::clause_0_front_material.adoc[]
+
+include::clause_1_scope.adoc[]
+
+include::clause_2_conformance.adoc[]
+
+include::clause_3_references.adoc[]
+
+include::clause_4_terms_and_definitions.adoc[]
+
+include::clause_5_conventions.adoc[]
+
+include::clause_6_overview.adoc[]
+
+include::clause_7_core.adoc[]
+
+include::clause_8_encodings.adoc[]
+
+include::clause_9_oas.adoc[]
+
+include::clause_10_media_types.adoc[]
+
+<<<
+include::annex_ats.adoc[]
+
+<<<
+include::annex_oas_example.adoc[]
+
+<<<
+include::annex_xml_examples.adoc[]
+
+
+////
+commented out for now
+<<<
+include::annex-n.adoc[]
+////
+
+<<<
+////
+Revision History should be the last annex before the Bibliography
+Bibliography should be the last annex
+////
+
+
+include::annex_history.adoc[]
+
+
+<<<
+include::annex_bibliography.adoc[]
