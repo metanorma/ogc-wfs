@@ -1,0 +1,40 @@
+= ogc-wfs
+OGC Web Feature Service in Metanorma
+
+Based on the Asciidoctor markup in https://github.com/opengeospatial/WFS_FES
+
+Note that the original markup has mostly been left alone, with the exception of
+the prefatory material, much of which has been treated as automatically generated
+boilerplate, or as document attributes. The autonumbering counters of the
+document have been kept, but they are not used in Metanorma, which implements
+its own autonumbering, and can be left out of Metanorma Asciidoctor.
+
+Unlike Native Asciidoctor, if no text is provided for a cross-reference, the
+cross-reference text will be provided automatically as a clause/asset number,
+not as the clause/asset title; e.g. "Clause 7.5.1", not "HTTP status codes".
+
+Recommendations, Requirements and Permissions are recognised automatically,
+as tables whose first cell is "Recommendation", "Requirement" or "Permission",
+optionally followed by a number -- as has been done in the source WFS_FES document.
+
+Some additional references have been added to the text. Some additional
+cross-references have been added within Annex A, but this has not been done
+exhaustively; the references to recommendations etc. within Annex A have not
+been marked up as cross-references.
+
+The generated HTML, PDF and DOC from the Metanorma Asciidoctor source has been
+included in the repository. To compile:
+
+[source,console]
+----
+cd core/standard
+sh make.sh
+----
+
+Note that while command-line `asciidoctor` permits includes outside of the
+directory the document is in (e.g. `include::../../openapi.yaml[]`), in
+asciidoctor embedded within Ruby (as is the case in Metanorma), such includes
+are blocked as unsafe. 
+http://discuss.asciidoctor.org/Newbie-question-Can-snippet-contents-be-retained-after-snippets-deleted-td4018.html
+documents a workaround to permit it programmatically, but we have preferred to move all the
+included files within the `core/standard` directory.
