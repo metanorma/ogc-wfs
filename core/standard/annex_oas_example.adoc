@@ -1,7 +1,7 @@
 [[oas30_example]]
-[appendix]
+[appendix,obligation=informative]
 :appendix-caption: Annex
-== OpenAPI definition example (Informative)
+== OpenAPI definition example
 
 === Overview
 
@@ -23,7 +23,7 @@ features (schema `buildingGeoJSON`) and a filter parameter for building features
 
 [source,YAML]
 ----
-include::../../openapi.yaml[]
+include::openapi.yaml[]
 ----
 
 [[openapi-buildings.yaml]]
@@ -31,5 +31,5 @@ include::../../openapi.yaml[]
 
 [source,YAML]
 ----
-include::../../openapi-buildings.yaml[]
+include::openapi-buildings.yaml[]
 ----

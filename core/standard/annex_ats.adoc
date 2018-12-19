@@ -1,7 +1,7 @@
 [[annex-a]]
 [appendix]
 :appendix-caption: Annex
-== Abstract Test Suite (Normative)
+== Abstract Test Suite
 
 CAUTION: link:https://github.com/opengeospatial/WFS_FES/issues/112[ISSUE 112] +
 The Abstract Test Suite is work-in-progress. Currently, only a draft for the
@@ -18,7 +18,7 @@ WFS 3.0 is not a Web Service in the traditional sense.  Rather, it defines the b
 
 .  Do the resources returned by the micro-services meet the structure and content requirements of the standard?
 
-Further complicating the issue, an API may expose micro-services in addition to those defined by the standard.  A test engine must be able to traverse the API description document, identify test points, and ignore micro-services which are not to be tested.  The process for identifying test points is provided in Section A.4.3.
+Further complicating the issue, an API may expose micro-services in addition to those defined by the standard.  A test engine must be able to traverse the API description document, identify test points, and ignore micro-services which are not to be tested.  The process for identifying test points is provided in <<identifytestpoints>>.
 
 === Conventions
 
@@ -26,7 +26,7 @@ The following conventions apply to this Abstract Test Suite:
 
 ==== Path Templates
 
-Path templates are used throughout these test suites.  Path templating refers to the usage of curly braces “{}” to mark a section of a URL path that can be replaced using path parameters.  The terms used to describe portions of these templates are based on the URL syntax described in RFC 3986.
+Path templates are used throughout these test suites.  Path templating refers to the usage of curly braces “{}” to mark a section of a URL path that can be replaced using path parameters.  The terms used to describe portions of these templates are based on the URL syntax described in <<rfc3986>>.
 
 *  scheme: http | https
 
@@ -234,9 +234,9 @@ The Test Approach used in the WFS 3.0 Abstract Test Suite includes four steps:
 
 . Verify that the resources returned at each test point are in accordance with the WFS 3.0 standard and any referenced content standard.
 
-Identification of test points is a new requirement with WFS 3.0.  Since an API is not a Web Service, there may be RESTful endpoints advertised which are not intended to be targets of the compliance testing.  Section A.4.2 describes the process for crawling the API Description document and extracting those URLs which should be tested as well as the path(s) they should be tested with.  The concatenation of a Server URL with a path forms a test point.
+Identification of test points is a new requirement with WFS 3.0.  Since an API is not a Web Service, there may be RESTful endpoints advertised which are not intended to be targets of the compliance testing.  <<retrieveapidescription>> describes the process for crawling the API Description document and extracting those URLs which should be tested as well as the path(s) they should be tested with.  The concatenation of a Server URL with a path forms a test point.
 
-Section A.4.3 describes how the test points are exercised to determine compliance with the WFS 3.0 standard.
+<<identifytestpoints>> describes how the test points are exercised to determine compliance with the WFS 3.0 standard.
 
 ==== General Tests
 
@@ -274,6 +274,7 @@ none
 ====== d) References:
 Requirement 8
 
+[[retrieveapidescription]]
 ==== Retrieve the API Description
 
 ===== Landing Page Retrieval
@@ -295,11 +296,12 @@ Validate that a landing page can be retrieved from the expected location.
 
 . Validate that a document was returned with a status code 200
 
-. Validate the contents of the returned document using test A.4.2.2
+. Validate the contents of the returned document using test <<landingpagevalidation>>
 
 ====== d) References:
 Requirement 1
 
+[[landingpagevalidation]]
 ===== Landing Page Validation
 
 ====== a) Test Purpose:
@@ -343,11 +345,12 @@ Validate that the API Definition document can be retrieved from the expected loc
 
 . Validate that a document was returned with a status code 200
 
-. Validate the contents of the returned document using test A.4.2.4
+. Validate the contents of the returned document using test <<apidefinitionvalidation>>
 
 ====== d) References:
 Requirements 3 and 4
 
+[[apidefinitionvalidation]]
 ===== API Definition Validation
 
 ====== a) Test Purpose:
@@ -361,17 +364,19 @@ Validate that the API Definition page complies with the require structure and co
 
 . Validate the API Definition document against the OpenAPI 3.0 schema
 
-. Identify the Test Points as described in test A.4.3
+. Identify the Test Points as described in test <<identifytestpoints>>
 
-. Process the API Definition document as described in test A.4.4
+. Process the API Definition document as described in test <<processingopenapidocument>>
 
 ====== d) References:
 Requirement 4
 
+[[identifytestpoints]]
 ==== Identify the Test Points
 
-Identification of the test points is a pre-condition to performing a compliance test.  Thisprocess starts with A.4.3.1.
+Identification of the test points is a pre-condition to performing a compliance test.  This process starts with <<identifytestpoints1>>.
 
+[[identifytestpoints1]]
 ===== Identify Test Points:
 
 ====== a) Purpose:
@@ -387,7 +392,7 @@ To identify the test points associated with each Path in the OpenAPI document
 
 FOR EACH paths property in the OpenAPI document
     If the path name is one of those specified in the WFS 3.0 specification
-        Retrieve the Server URIs using A.4.3.2.
+        Retrieve the Server URIs using <<identifyserveruris>>.
         FOR EACH Server URI
             Concatenate the Server URI with the path name to form a test point.
             Add that test point to the list.
@@ -395,6 +400,7 @@ FOR EACH paths property in the OpenAPI document
 ====== d) References:
 None
 
+[[identifyserveruris]]
 ===== Identify Server URIs:
 
 ====== a) Purpose:
@@ -422,13 +428,14 @@ To identify all server URIs applicable to an OpenAPI Operation Object
 
  - IF no Server Objects are defined at the root level, then the default server object is assumed as described in the OpenAPI specification.
 
-2) Process each Server Object using A.4.3.3.
+2) Process each Server Object using <<processserverobject>>.
 
 3) Delete any Server URI which does not reference a server on the list of servers to test.
 
 ====== d) References:
 None
 
+[[processserverobject]]
 ===== Process Server Object:
 
 ====== a) Purpose:
@@ -458,6 +465,7 @@ Processing the Server Object results in a set of absolute URIs.  This set contai
 ====== d) References:
 None
 
+[[processingopenapidocument]]
 ==== Processing the OpenAPI Document
 
 ===== Validate /api path

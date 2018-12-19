@@ -31,7 +31,9 @@
 :docsubtype: Interface
 :keywords: ogcdoc, OGC document, web feature service, wfs, feature, property, geographic information, spatial data, spatial things, dataset, distribution, API, openapi, geojson, gml, html
 :submitting-organizations: CubeWerx Inc.; Hexagon; interactive instruments GmbH; Planet Labs 
+:safe: :unsafe
 
+// :safe: unsafe permits asciidoctor in program mode to retrieve includes from outside local directory
 
 ////
 Make sure to complete each included document
