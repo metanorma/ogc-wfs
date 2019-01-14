@@ -30,9 +30,16 @@
 :fullname_2: Panagiotis (Peter) A. Vretanos
 :docsubtype: Interface
 :keywords: ogcdoc, OGC document, web feature service, wfs, feature, property, geographic information, spatial data, spatial things, dataset, distribution, API, openapi, geojson, gml, html
-:submitting-organizations: CubeWerx Inc.; Hexagon; interactive instruments GmbH; Planet Labs 
+:submitting-organizations: CubeWerx Inc.; Hexagon; interactive instruments GmbH; Planet Labs
 :safe: :unsafe
-
+:docfile: 17-069.adoc
+:mn-document-class: ogc
+:mn-output-extensions: xml,html,doc,pdf
+:local-cache-only:
+:data-uri-image:
+:pdf-uri: https://riboseinc.github.io/ogc-wfs/ogc-wfs.pdf
+:xml-uri: https://riboseinc.github.io/ogc-wfs/ogc-wfs.xml
+:doc-uri: https://riboseinc.github.io/ogc-wfs/ogc-wfs.doc
 // :safe: unsafe permits asciidoctor in program mode to retrieve includes from outside local directory
 
 ////

@@ -1,13 +1,28 @@
-= ogc-wfs
-OGC Web Feature Service in Metanorma
+:repo-name: ogc-wfs
 
-Based on the Asciidoctor markup in https://github.com/opengeospatial/WFS_FES
+= OGC Web Feature Service in Metanorma
+
+This work item belongs to OGC.
+
+image:https://travis-ci.com/riboseinc/ogc-wfs.svg?branch=master["Build Status", link="https://travis-ci.com/riboseinc/ogc-wfs"]
+
+This document is available in its rendered forms here:
+
+* https://riboseinc.github.io/ogc-wfs/[OGC Web Feature Service in Metanorma (HTML)]
+* https://riboseinc.github.io/ogc-wfs/ogc-wfs.pdf[PDF]
+* https://riboseinc.github.io/ogc-wfs/ogc-wfs.xml[Metanorma XML]
+* https://riboseinc.github.io/ogc-wfs/ogc-wfs.rxl[Relaton XML (Bibliographic item)]
+
+
+== Background
+
+This repo is based on the Asciidoctor markup in https://github.com/opengeospatial/WFS_FES
 
 Note that the original markup has mostly been left alone, with the exception of
 the prefatory material, much of which has been treated as automatically generated
 boilerplate, or as document attributes. The autonumbering counters of the
 document have been kept, but they are not used in Metanorma, which implements
-its own autonumbering, and can be left out of Metanorma Asciidoctor.
+its own autonumbering, and can be left out of Metanorma's Asciidoctor input.
 
 Unlike Native Asciidoctor, if no text is provided for a cross-reference, the
 cross-reference text will be provided automatically as a clause/asset number,
@@ -34,7 +49,61 @@ sh make.sh
 Note that while command-line `asciidoctor` permits includes outside of the
 directory the document is in (e.g. `include::../../openapi.yaml[]`), in
 asciidoctor embedded within Ruby (as is the case in Metanorma), such includes
-are blocked as unsafe. 
+are blocked as unsafe.
 http://discuss.asciidoctor.org/Newbie-question-Can-snippet-contents-be-retained-after-snippets-deleted-td4018.html
 documents a workaround to permit it programmatically, but we have preferred to move all the
 included files within the `core/standard` directory.
+
+
+== Fetching the document
+
+[source,sh]
+----
+git clone https://gitlab.com/riboseinc/ogc-wfs/
+----
+
+== Installing Build Tools
+
+See https://www.metanorma.com/overview/getting-started/
+
+
+== Running via Docker or locally
+
+If you have installed the build tools locally, and wish to run the
+locally-installed compilation tools, there is nothing further to set.
+
+If you don't want to deal with local dependencies, use the docker
+version by:
+
+[source,sh]
+----
+export METANORMA_DOCKER=1
+----
+
+The `Makefile` will automatically choose the proper command to
+execute.
+
+
+== Building The Document
+
+[source,sh]
+----
+make clean all
+----
+
+The following outputs will be built:
+
+* OGC XML (https://github.com/riboseinc/metanorma-model-ogc) (`[filename].xml`)
+* HTML (`[filename].html`)
+* PDF (`[filename].pdf`)
+* Word DOC (`[filename].doc`)
+
+
+== Iterating the document
+
+[source,sh]
+----
+make html
+open ogc-*.html
+----
+
