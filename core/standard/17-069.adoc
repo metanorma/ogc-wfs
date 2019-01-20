@@ -23,9 +23,9 @@
 :draft: 3.0.0-draft.1
 :external-id: http://www.opengis.net/doc/IS/wfs-1/3.0
 :docnumber: 17-069
-:received-date: yyyy-mm-dd
-:issued-date: yyyy-mm-dd
-:published-date: yyyy-mm-dd
+:received-date: 1000-01-01
+:issued-date: 1000-01-01
+:published-date: 1000-01-01
 :fullname: Clemens Portele
 :fullname_2: Panagiotis (Peter) A. Vretanos
 :docsubtype: Interface
