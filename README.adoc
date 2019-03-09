@@ -4,7 +4,7 @@
 
 This work item belongs to OGC.
 
-image:https://travis-ci.com/riboseinc/ogc-wfs.svg?branch=master["Build Status", link="https://travis-ci.com/riboseinc/ogc-wfs"]
+image:https://travis-ci.com/metanorma/ogc-wfs.svg?branch=master["Build Status", link="https://travis-ci.com/metanorma/ogc-wfs"]
 
 This document is available in its rendered forms here:
 
@@ -59,7 +59,7 @@ included files within the `core/standard` directory.
 
 [source,sh]
 ----
-git clone https://gitlab.com/riboseinc/ogc-wfs/
+git clone https://gitlab.com/metanorma/ogc-wfs/
 ----
 
 == Installing Build Tools
@@ -93,7 +93,7 @@ make clean all
 
 The following outputs will be built:
 
-* OGC XML (https://github.com/riboseinc/metanorma-model-ogc) (`[filename].xml`)
+* OGC XML (https://github.com/metanorma/metanorma-model-ogc) (`[filename].xml`)
 * HTML (`[filename].html`)
 * PDF (`[filename].pdf`)
 * Word DOC (`[filename].doc`)
