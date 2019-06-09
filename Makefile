@@ -1,20 +1,23 @@
 #!make
 SHELL := /bin/bash
+# Ensure the xml2rfc cache directory exists locally
+IGNORE := $(shell mkdir -p $(HOME)/.cache/xml2rfc)
 
-include metanorma.env
-export $(shell sed 's/=.*//' metanorma.env)
+SRC := $(shell yq r metanorma.yml metanorma.source.files | cut -c 3-999)
+ifeq ($(SRC),null)
+SRC := $(filter-out README.adoc, $(wildcard *.adoc))
+endif
 
-FORMATS := $(METANORMA_FORMATS)
-comma := ,
-empty :=
-space := $(empty) $(empty)
-FORMATS_LIST := $(subst $(space),$(comma),$(FORMATS))
+FORMAT_MARKER := mn-output-
+FORMATS := $(shell grep "$(FORMAT_MARKER)" $(SRC) | cut -f 2 -d ' ' | tr ',' '\n' | sort | uniq | tr '\n' ' ')
 
-SRC  := core/standard/17-069.adoc
 XML  := $(patsubst %.adoc,%.xml,$(SRC))
+XMLRFC3  := $(patsubst %.adoc,%.v3.xml,$(SRC))
 HTML := $(patsubst %.adoc,%.html,$(SRC))
 DOC  := $(patsubst %.adoc,%.doc,$(SRC))
 PDF  := $(patsubst %.adoc,%.pdf,$(SRC))
+TXT  := $(patsubst %.adoc,%.txt,$(SRC))
+NITS := $(patsubst %.adoc,%.nits,$(wildcard draft-*.adoc))
 WSD  := $(wildcard models/*.wsd)
 XMI	 := $(patsubst models/%,xmi/%,$(patsubst %.wsd,%.xmi,$(WSD)))
 PNG	 := $(patsubst models/%,images/%,$(patsubst %.wsd,%.png,$(WSD)))
@@ -33,10 +36,23 @@ OUT_FILES  := $(foreach F,$(_OUT_FILES),$($F))
 
 all: images $(OUT_FILES)
 
-%.xml %.html %.doc %.pdf:	%.adoc | bundle
-	pushd $(dir $^); \
-	FILENAME=$(notdir $^); \
+%.v3.xml %.xml %.html %.doc %.pdf %.txt:	%.adoc | bundle
+	FILENAME=$^; \
 	${COMPILE_CMD}
+
+try:
+	echo $(SRC)
+
+draft-%.nits:	draft-%.txt
+	VERSIONED_NAME=`grep :name: draft-$*.adoc | cut -f 2 -d ' '`; \
+	cp $^ $${VERSIONED_NAME}.txt && \
+	idnits --verbose $${VERSIONED_NAME}.txt > $@ && \
+	cp $@ $${VERSIONED_NAME}.nits && \
+	cat $${VERSIONED_NAME}.nits
+
+%.nits:
+
+nits: $(NITS)
 
 images: $(PNG)
 
@@ -47,9 +63,6 @@ xmi: $(XMI)
 
 xmi/%.xmi: models/%.wsd
 	plantuml -xmi:star -o ../xmi/ $<
-
-%.adoc:
-
 
 define FORMAT_TASKS
 OUT_FILES-$(FORMAT) := $($(shell echo $(FORMAT) | tr '[:lower:]' '[:upper:]'))
@@ -122,15 +135,6 @@ watch-serve: $(NODE_BIN_DIR)/run-p
 
 publish:
 	mkdir -p published  && \
-	cp -a $(basename $(SRC)).* published/ && \
+	cp -a $(wildcard $(addsuffix .*,$(basename $(SRC)))) published/ && \
 	cp $(firstword $(HTML)) published/index.html; \
 	if [ -d "images" ]; then cp -a images published; fi
-
-deploy_key:
-	openssl aes-256-cbc -K $(encrypted_$(ENCRYPTION_LABEL)_key) \
-		-iv $(encrypted_$(ENCRYPTION_LABEL)_iv) -in $@.enc -out $@ -d && \
-	chmod 600 $@
-
-deploy: deploy_key
-	export COMMIT_AUTHOR_EMAIL=$(COMMIT_AUTHOR_EMAIL); \
-	./deploy.sh

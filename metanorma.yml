@@ -1,0 +1,7 @@
+---
+metanorma:
+  deploy:
+    email: "travis-ci@metanorma.org"
+  source:
+    files:
+      - core/standard/17-069.adoc
