@@ -4,7 +4,7 @@ SHELL := /bin/bash
 IGNORE := $(shell mkdir -p $(HOME)/.cache/xml2rfc)
 
 SRC := $(shell yq r metanorma.yml metanorma.source.files | cut -c 3-999)
-ifeq ($(SRC),null)
+ifeq ($(SRC),ll)
 SRC := $(filter-out README.adoc, $(wildcard *.adoc))
 endif
 
@@ -39,9 +39,6 @@ all: images $(OUT_FILES)
 %.v3.xml %.xml %.html %.doc %.pdf %.txt:	%.adoc | bundle
 	FILENAME=$^; \
 	${COMPILE_CMD}
-
-try:
-	echo $(SRC)
 
 draft-%.nits:	draft-%.txt
 	VERSIONED_NAME=`grep :name: draft-$*.adoc | cut -f 2 -d ' '`; \
@@ -84,7 +81,7 @@ $(foreach FORMAT,$(FORMATS),$(eval $(FORMAT_TASKS)))
 open: open-html
 
 clean:
-	rm -f $(OUT_FILES)
+	rm -f $(OUT_FILES) && rm -rf published
 
 bundle:
 	if [ "x" == "${METANORMA_DOCKER}x" ]; then bundle; fi
@@ -105,13 +102,13 @@ $(NODE_PACKAGE_PATHS): package.json
 	npm i
 
 watch: $(NODE_BIN_DIR)/onchange
-	make all
-	$< $(ALL_SRC) -- make all
+	$(MAKE) all
+	$< $(ALL_SRC) -- $(MAKE) all
 
 define WATCH_TASKS
 watch-$(FORMAT): $(NODE_BIN_DIR)/onchange
-	make $(FORMAT)
-	$$< $$(SRC_$(FORMAT)) -- make $(FORMAT)
+	$(MAKE) $(FORMAT)
+	$$< $$(SRC_$(FORMAT)) -- $(MAKE) $(FORMAT)
 
 .PHONY: watch-$(FORMAT)
 endef
@@ -134,7 +131,10 @@ watch-serve: $(NODE_BIN_DIR)/run-p
 #
 
 publish:
-	mkdir -p published  && \
-	cp -a $(wildcard $(addsuffix .*,$(basename $(SRC)))) published/ && \
-	cp $(firstword $(HTML)) published/index.html; \
-	if [ -d "images" ]; then cp -a images published; fi
+	$(MAKE) published
+
+published:
+	mkdir -p $@ && \
+	cp -a $(OUT_FILES) $@/ || true && \
+	cp $(firstword $(HTML)) $@/index.html; \
+	if [ -d "images" ]; then cp -a images $@/; fi
