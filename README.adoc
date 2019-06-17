@@ -5,13 +5,14 @@
 This work item belongs to OGC.
 
 image:https://travis-ci.com/metanorma/ogc-wfs.svg?branch=master["Build Status", link="https://travis-ci.com/metanorma/ogc-wfs"]
+image:https://ci.appveyor.com/api/projects/status/xufnh2e4ys48msdw/branch/master?svg=true["Build Status", link="https://ci.appveyor.com/project/ribose/ogc-wfs"]
 
 This document is available in its rendered forms here:
 
-* https://riboseinc.github.io/ogc-wfs/[OGC Web Feature Service in Metanorma (HTML)]
-* https://riboseinc.github.io/ogc-wfs/ogc-wfs.pdf[PDF]
-* https://riboseinc.github.io/ogc-wfs/ogc-wfs.xml[Metanorma XML]
-* https://riboseinc.github.io/ogc-wfs/ogc-wfs.rxl[Relaton XML (Bibliographic item)]
+* https://metanorma.github.io/ogc-wfs/[OGC Web Feature Service in Metanorma (HTML)]
+* https://metanorma.github.io/ogc-wfs/ogc-wfs.pdf[PDF]
+* https://metanorma.github.io/ogc-wfs/ogc-wfs.xml[Metanorma XML]
+* https://metanorma.github.io/ogc-wfs/ogc-wfs.rxl[Relaton XML (Bibliographic item)]
 
 
 == Background
