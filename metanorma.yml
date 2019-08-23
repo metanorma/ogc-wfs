@@ -4,4 +4,8 @@ metanorma:
     email: "travis-ci@metanorma.org"
   source:
     files:
-      - core/standard/17-069.adoc
+      - sources/core/standard/17-069.adoc
+relaton:
+  collection:
+    name: Web Feature Service
+    organization: Open Geospatial Consortium
