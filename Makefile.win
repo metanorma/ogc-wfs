@@ -3,7 +3,7 @@
 # Ensure the xml2rfc cache directory exists locally
 IGNORE := $(shell md $(USERPROFILE)\.cache\xml2rfc)
 
-SRC := core/standard/17-069.adoc
+SRC := core\standard\17-069.adoc
 
 FORMAT_MARKER := mn-output-
 FORMATS := $(shell grep "$(FORMAT_MARKER)" $(SRC) | cut -f 2 -d " " | tr "," "\\n" | sort | uniq | tr "\\n" " ")
@@ -15,9 +15,9 @@ DOC  := $(patsubst %.adoc,%.doc,$(SRC))
 PDF  := $(patsubst %.adoc,%.pdf,$(SRC))
 TXT  := $(patsubst %.adoc,%.txt,$(SRC))
 NITS := $(patsubst %.adoc,%.nits,$(wildcard draft-*.adoc))
-WSD  := $(wildcard models/*.wsd)
-XMI	 := $(patsubst models/%,xmi/%,$(patsubst %.wsd,%.xmi,$(WSD)))
-PNG	 := $(patsubst models/%,images/%,$(patsubst %.wsd,%.png,$(WSD)))
+WSD  := $(wildcard models\*.wsd)
+XMI	 := $(patsubst models\%,xmi\%,$(patsubst %.wsd,%.xmi,$(WSD)))
+PNG	 := $(patsubst models\%,images\%,$(patsubst %.wsd,%.png,$(WSD)))
 
 COMPILE_CMD_LOCAL := bundle exec metanorma
 COMPILE_CMD_DOCKER := docker run -v "$$(pwd)":/metanorma/ ribose/metanorma metanorma
@@ -38,12 +38,12 @@ all: $(OUT_FILES)
 
 images: $(PNG)
 
-images/%.png: models/%.wsd
+images\%.png: models/%.wsd
 	plantuml -tpng -o ../images/ $<
 
 xmi: $(XMI)
 
-xmi/%.xmi: models/%.wsd
+xmi\%.xmi: models\%.wsd
 	plantuml -xmi:star -o ../xmi/ $<
 
 define FORMAT_TASKS
@@ -72,54 +72,3 @@ bundle:
 	IF "" == "${METANORMA_DOCKER}" bundle
 
 .PHONY: bundle all open clean
-
-#
-# Watch-related jobs
-#
-
-.PHONY: watch serve watch-serve
-
-NODE_BINS          := onchange live-serve run-p
-NODE_BIN_DIR       := node_modules/.bin
-NODE_PACKAGE_PATHS := $(foreach PACKAGE_NAME,$(NODE_BINS),$(NODE_BIN_DIR)/$(PACKAGE_NAME))
-
-$(NODE_PACKAGE_PATHS): package.json
-	npm i
-
-watch: $(NODE_BIN_DIR)/onchange
-	make all
-	$< $(ALL_SRC) -- make all
-
-define WATCH_TASKS
-watch-$(FORMAT): $(NODE_BIN_DIR)/onchange
-	make $(FORMAT)
-	$$< $$(SRC_$(FORMAT)) -- make $(FORMAT)
-
-.PHONY: watch-$(FORMAT)
-endef
-
-$(foreach FORMAT,$(FORMATS),$(eval $(WATCH_TASKS)))
-
-serve: $(NODE_BIN_DIR)/live-server revealjs-css reveal.js images
-	set PORT=$${PORT:-8123} & \
-	set port=$${PORT} & \
-	for /r %%html in $(HTML) do ( \
-		$< --entry-file=%%html --port=%port% --ignore="*.html,*.xml,Makefile,Gemfile.*,package.*.json" --wait=1000 & \
-		set /A port=%port%+1 \
-	)
-
-watch-serve: $(NODE_BIN_DIR)/run-p
-	$< watch serve
-
-#
-# Deploy jobs
-#
-
-publish: published
-
-published:
-	mkdir $@
-	cp -a $(addsuffix .*,$(basename $(SRC))) $@/
-	cp $(firstword $(HTML)) $@/index.html
-
-.PHONY: publish
