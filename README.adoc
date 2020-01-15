@@ -1,11 +1,9 @@
-:repo-name: ogc-wfs
-
-= OGC Web Feature Service in Metanorma
+= OGC Standard in Metanorma: Web Feature Service
 
 This work item belongs to OGC.
 
-image:https://travis-ci.com/metanorma/ogc-wfs.svg?branch=master["Build Status", link="https://travis-ci.com/metanorma/ogc-wfs"]
-image:https://ci.appveyor.com/api/projects/status/xufnh2e4ys48msdw/branch/master?svg=true["Build Status", link="https://ci.appveyor.com/project/ribose/ogc-wfs"]
+image:https://github.com/metanorma/ogc-wfs/workflows/ubuntu/badge.svg["Build Status (Ubuntu)", link="https://github.com/metanorma/ogc-wfs/actions?workflow=ubuntu"]
+image:https://github.com/metanorma/ogc-wfs/workflows/windows/badge.svg["Build Status (Windows)", link="https://github.com/metanorma/ogc-wfs/actions?workflow=windows"]
 
 This document is available in its rendered forms here:
 
